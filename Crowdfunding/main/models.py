@@ -8,7 +8,7 @@ class UserProfile(models.Model):
     slika_profila = models.ImageField(upload_to='slike_profila/', blank=True)
 
     def __str__(self):
-        return self.korisnik.username
+        return f"{self.korisnik.first_name} {self.korisnik.last_name}"
     
 # Many to One - Svaki projekt ima točno jednog autora, ali jedan autor može imati više projekata.
 class Project(models.Model):
@@ -31,7 +31,7 @@ class Donation(models.Model):
     projekt = models.ForeignKey(Project, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.donator.username} - {self.iznos} kn"
+        return f"{self.donator.first_name} {self.donator.last_name} - {self.iznos} kn"
 
 # Many to Many - Više korisnika može podržavati više projekata.
 class Support(models.Model):
@@ -40,4 +40,4 @@ class Support(models.Model):
     datum_podrske = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.korisnik.username} podržava {self.projekt.naziv}"
+        return f"{self.korisnik.first_name} {self.korisnik.last_name} podržava {self.projekt.naziv}"
