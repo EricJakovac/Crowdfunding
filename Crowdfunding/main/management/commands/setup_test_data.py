@@ -22,7 +22,7 @@ class Command(BaseCommand):
         users_to_delete = User.objects.exclude(is_superuser=True).all()
 
         for user in users_to_delete:
-            self.stdout.write(f"Deleting user: {user.username}")
+            self.stdout.write(f"Deleting user: {user.first_name} {user.last_name}")
             user.delete()
 
         for model in models_to_delete:

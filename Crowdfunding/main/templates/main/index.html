@@ -1,0 +1,16 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Welcome to Crowdfunding Website</h1>
+  <p>The database has the following record counts:</p>
+  <ul>
+    <li><strong>Users:</strong> {{ num_users }}</li>
+    <li><strong>Projects:</strong> {{ num_projects }}</li>
+    <li><strong>Donations:</strong> {{ num_donations }}</li>
+  </ul>
+  {% load static %}
+  <img src="{% static 'crowdfunding.png' %}" alt="Crowdfunding picture" class="responsive">
+  <br><hr>
+  <center><p>Welcome to Crowdfunding, a website developed by<em><strong>Eric Jakovac & Teo Blaži</strong></em>!</p></center>
+  <hr>
+{% endblock %}

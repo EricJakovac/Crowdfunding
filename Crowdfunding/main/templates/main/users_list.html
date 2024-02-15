@@ -1,0 +1,12 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h1>List of Users</h1>
+{% for user in user_list %}
+ 
+<h3>{{user.first_name}} {{user.last_name}}</h3>
+<p>Email: {{user.email}}</p>
+<p>User Profile: {{user.userprofile}}</p>
+
+{% endfor %}
+{% endblock %}

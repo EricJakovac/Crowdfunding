@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    {% block title %}
+    <title>Crowdfunding</title>
+    {% endblock %}
+</head>
+<body>
+    {% block sidebar %}
+    <div class="sidenav">
+        <a href="{% url 'main:homepage' %}">Home Page</a>
+        <a href="{% url 'main:user_list' %}">Users</a>
+        <a href="{% url 'main:user_profile_list' %}">User Profiles</a>
+        <a href="{% url 'main:project_list' %}">Projects</a>
+        <a href="{% url 'main:donation_list' %}">Donations</a>
+        <a href="{% url 'main:support_list' %}">Supports</a>
+    </div>
+    {% endblock %}
+
+    <div class="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>

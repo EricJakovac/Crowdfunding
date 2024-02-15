@@ -50,6 +50,17 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+#pip install django-responsive
+MIDDLEWARE_CLASSES = (
+    # Other middleware classes go here
+    'responsive.middleware.DeviceInfoMiddleware',
+)
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    # Other context processors included here
+    'responsive.context_processors.device_info',
+)
+
 ROOT_URLCONF = 'Crowdfunding.urls'
 
 TEMPLATES = [
@@ -122,3 +133,9 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+DEFAULT_BREAKPOINTS = {
+    'phone': 480,
+    'tablet': 767,
+    'desktop': None,
+}
