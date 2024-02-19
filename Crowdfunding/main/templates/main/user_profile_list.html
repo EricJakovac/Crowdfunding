@@ -1,0 +1,14 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h1>List of User Profiles</h1>
+{% for user in user_profile_list %}
+ 
+<h3>{{user.korisnik.first_name}} {{user.korisnik.last_name}}</h3>
+<p>Opis: {{user.opis}}</p> 
+{% load static %}
+<img src="{% static 'usericon.png' %}" alt="User Profile picture" class="pictures" width="80px" height="80px">
+</br></br>
+
+{% endfor %}
+{% endblock %}

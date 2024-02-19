@@ -1,0 +1,14 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h1>List of Donations</h1>
+{% for donation in donation_list %}
+ 
+<h3>{{donation.donator.first_name}} {{donation.donator.last_name}}</h3>
+<p>Iznos: {{donation.iznos}}</p>
+<p>Datum: {{donation.datum_donacije}}</p>
+<p>Projekt: {{donation.projekt}}</p>
+</br>
+
+{% endfor %}
+{% endblock %}

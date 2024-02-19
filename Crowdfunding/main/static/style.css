@@ -31,3 +31,9 @@
   height: auto;
   align-content: center;
 }
+
+.pictures {
+  width: 100px;
+  height: 100px;
+  align-content: left;
+}

@@ -1,0 +1,16 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h1>List of Projects</h1>
+{% for project in project_list %}
+ 
+<h3>{{project.naziv}}</h3>
+<p>Opis: {{project.opis}}</p>
+<p>Početak kampanje: {{project.pocetak_kampanje}}</p>
+<p>Ciljani iznos: {{project.ciljani_iznos}}</p>
+<p>Trenutni iznos: {{project.trenutni_iznos}}</p>
+<p>Autor: {{project.autor.first_name}} {{project.autor.last_name}}</p>
+</br>
+
+{% endfor %}
+{% endblock %}
