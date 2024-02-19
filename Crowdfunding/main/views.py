@@ -3,7 +3,11 @@ from django.db.models.query import QuerySet
 from django.shortcuts import render
 from main.models import *
 from django.views.generic import ListView
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render, redirect
+from django.views.generic.edit import CreateView
+from django.urls import reverse_lazy
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import authenticate, login
 
 class UserList(ListView):
     model = User
@@ -44,6 +48,27 @@ class SupportList(ListView):
 
     def get_queryset(self):
         return Support.objects.all()
+    
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password1']
+
+            user = authenticate(username=username, password=password)
+            login(request, user)
+            return redirect('index')
+
+    else:
+        form = UserCreationForm()
+
+    context = {'form': form}
+
+    return render(request, 'registration/register.html', context)
+
 
 def homepage(request):
     num_users = User.objects.exclude(is_staff=True).count()

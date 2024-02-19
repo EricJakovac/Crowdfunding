@@ -24,6 +24,11 @@
     <div class="content">
         {% block content %}
         {% endblock %}
+        {% if user.is_authenticated %}
+    <p>Vaše ime: {{ user.username }}</p>
+{% else %}
+    <p>Niste prijavljeni.</p>
+{% endif %}
     </div>
 </body>
 </html>
