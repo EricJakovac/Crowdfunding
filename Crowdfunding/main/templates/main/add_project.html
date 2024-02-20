@@ -1,14 +1,118 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Add Project</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3f3f3;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        form {
+            background-color: #fff;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 400px; 
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1 {
+            color: #3399cc;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        a,
+        button {
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+        }
+
+        button.primary-button {
+            background-color: #3399cc;
+            color: #fff;
+            border: none;
+        }
+
+        a.cancel-button {
+            background-color: #ff3333;
+            color: #fff;
+            border: none;
+            margin-right: 5px;
+        }
+
+        a.cancel-button:hover {
+            background-color: #cc0000;
+        }
+    </style>
 </head>
+
 <body>
-    <h1>Add New Project</h1>
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Add Project</button>
+        <h1>Add New Project</h1>
+
+        {{ form.naziv.label_tag }}
+        {{ form.naziv }}
+        
+        {{ form.opis.label_tag }}
+        {{ form.opis }}
+
+        {{ form.pocetak_kampanje.label_tag }}
+        {{ form.pocetak_kampanje }}
+
+        {{ form.zavrsetak_kampanje.label_tag }}
+        {{ form.zavrsetak_kampanje }}
+
+        {{ form.ciljani_iznos.label_tag }}
+        {{ form.ciljani_iznos }}
+
+        {{ form.trenutni_iznos.label_tag }}
+        {{ form.trenutni_iznos }}
+
+        {{ form.autor.label_tag }}
+        {{ form.autor }}
+
+        <div class="button-container">
+            <button type="submit" class="primary-button">Add Project</button>
+            <a href="{% url 'main:project_list' %}" class="cancel-button">Cancel</a>
+        </div>
     </form>
 </body>
+
 </html>

@@ -56,6 +56,12 @@ class ProjectCreateView(CreateView):
     template_name = 'main/add_project.html'
     success_url = reverse_lazy('main:project_list')
 
+class UserCreateView(CreateView):
+    model = User
+    form_class = UserForm
+    template_name = 'main/add_user.html'
+    success_url = reverse_lazy('main:user_list')
+
 class ProjectUpdateView(UpdateView):
     model = Project
     form_class = ProjectForm

@@ -1,84 +1,145 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-  <h1>List of Projects</h1>
-  <!-- Search Form -->
-  <form id="search-form">
-    <input type="text" id="search-input" name="search" placeholder="Search Project Name...">
-    <button type="button" onclick="filterProjects()">Search</button>
-  </form>
+<h1>List of Projects</h1>
+<style>
+  #search-form {
+    display: flex;
+    align-items: center;
+  }
 
-  <br><br><hr><br>
+  #search-input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+    width: 200px;
+  }
 
-  <a href="{% url 'main:add' %}">Add Project</a>
-  <br><br><br>
+  #search-input:focus {
+    outline: none;
+    border-color: #3399cc;
+  }
 
-  <!-- Project Table -->
-  <table id="project-table">
-    <thead>
-      <tr>
-        <th>Naziv</th>
-        <th>Opis</th>
-        <th>Početak kampanje</th>
-        <th>Ciljani iznos (€)</th>
-        <th>Trenutni iznos (€)</th>
-        <th>Autor</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for project in project_list %}
-        <tr>
-          <td>{{ project.naziv }}</td>
-          <td>{{ project.opis }}</td>
-          <td>{{ project.pocetak_kampanje }}</td>
-          <td>{{ project.ciljani_iznos }}</td>
-          <td>{{ project.trenutni_iznos }}</td>
-          <td>{% if project.autor.first_name or project.autor.last_name %}{{ project.autor.first_name }} {{ project.autor.last_name }}{% else %}{{ project.autor.username }}{% endif %}</td>
-          <td>
-            <a href="{% url 'main:update' pk=project.pk %}">Update</a>
-            <a href="{% url 'main:delete' pk=project.pk %}">Delete</a>
-          </td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  #search-button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #3399cc;
+    color: #fff;
+    cursor: pointer;
+  }
 
-  <!-- Displayed when no projects are found -->
-  <div id="not-found-message" style="display: none; font-weight: bold;">
-    Project not found!
-  </div>
+  #search-button:hover {
+    background-color: #2674a6;
+  }
 
-  <script>
-    function filterProjects() {
-      var input, filter, table, tr, td, i, txtValue;
-      input = document.getElementById("search-input");
-      filter = input.value.toUpperCase();
-      table = document.getElementById("project-table");
-      tr = table.getElementsByTagName("tr");
-      var found = false;
+  .action-button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #3399cc;
+    color: #fff;
+    cursor: pointer;
+    text-decoration: none;
+    margin-right: 10px;
+  }
 
-      for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[0]; // Change index to the column you want to search
-        if (td) {
-          txtValue = td.textContent || td.innerText;
-          if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            tr[i].style.display = "";
-            found = true;
-          } else {
-            tr[i].style.display = "none";
-          }
+  .action-button:hover {
+    background-color: #2674a6;
+  }
+
+  a.delete-button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ff3333;
+    color: #fff;
+    cursor: pointer;
+    text-decoration: none;
+    margin-right: 10px;
+  }
+
+  a.delete-button:hover {
+    background-color: #cc0000;
+  }
+</style>
+
+<form id="search-form">
+  <input type="text" id="search-input" name="search" placeholder="Search Project Name...">
+  <button type="button" id="search-button" onclick="filterProjects()">Search</button>
+</form>
+
+<br><br>
+<hr><br>
+
+<a href="{% url 'main:add' %}" class="action-button">Add Project</a>
+<br><br><br>
+
+<table id="project-table" class="responsive-table">
+  <thead>
+    <tr>
+      <th>Naziv</th>
+      <th>Opis</th>
+      <th>Početak kampanje</th>
+      <th>Ciljani iznos (€)</th>
+      <th>Trenutni iznos (€)</th>
+      <th>Autor</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for project in project_list %}
+    <tr>
+      <td>{{ project.naziv }}</td>
+      <td>{{ project.opis }}</td>
+      <td>{{ project.pocetak_kampanje }}</td>
+      <td>{{ project.ciljani_iznos }}</td>
+      <td>{{ project.trenutni_iznos }}</td>
+      <td>{% if project.autor.first_name or project.autor.last_name %}{{ project.autor.first_name }} {{project.autor.last_name }} {% else %}{{ project.autor.username }}{% endif %}</td>
+      <td>
+        <a href="{% url 'main:update' pk=project.pk %}" class="action-button" style="text-decoration: none;">Update</a>
+        <br><br><br>
+        <a href="{% url 'main:delete' pk=project.pk %}" class="delete-button" style="text-decoration: none;">Delete</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<div id="not-found-message" style="display: none; font-weight: bold;">
+  Project not found!
+</div>
+
+<script>
+  function filterProjects() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("search-input");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("project-table");
+    tr = table.getElementsByTagName("tr");
+    var found = false;
+
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[0];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+          found = true;
+        } else {
+          tr[i].style.display = "none";
         }
       }
-
-      // Show or hide the "not found" message
-      var message = document.getElementById("not-found-message");
-      if (found) {
-        message.style.display = "none";
-      } else {
-        message.style.display = "block";
-        table.style.display = "none";  // Hide the table when no projects are found
-      }
     }
-  </script>
+
+    var message = document.getElementById("not-found-message");
+    if (found) {
+      message.style.display = "none";
+    } else {
+      message.style.display = "block";
+      table.style.display = "none";
+    }
+  }
+</script>
 {% endblock %}

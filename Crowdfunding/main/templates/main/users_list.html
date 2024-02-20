@@ -1,12 +1,30 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
+<style>
+    .action-button {
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        background-color: #3399cc;
+        color: #fff;
+        cursor: pointer;
+        text-decoration: none;
+        margin-right: 10px;
+    }
+    
+    .action-button:hover {
+        background-color: #2674a6;
+    }
+    </style>
 <h1>List of Users</h1>
+<a href="{% url 'main:adduser' %}" class="action-button">Add User</a>
 {% for user in user_list %}
  
-<h3>{{user.first_name}} {{user.last_name}}</h3>
+<h3>{% if user.first_name or user.last_name %}{{ user.first_name }} {{ user.last_name }}{% else %}{{ user.username }}{% endif %}</h3>
 <p>Email: {{user.email}}</p>
 <p>User Profile: <a href="{% url 'main:user_profile_list' %}">{{user.userprofile}}</a></p>
+<br>
 
 {% endfor %}
 {% endblock %}

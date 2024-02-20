@@ -22,7 +22,6 @@
         <a href="#" id="logout-link">Logout</a>
         {% else %}
         <a href="{% url 'login' %}">Login</a>
-        <a href="{% url 'main:register' %}">Register</a>
         {% endif %}
         </div>
         {% endblock %}
@@ -34,8 +33,7 @@
             if (logoutLink) {
                 logoutLink.addEventListener('click', function(event) {
                     event.preventDefault();
-        
-                    // Postavi novu lokaciju na Django logout URL
+
                     window.location.href = '{% url "logout" %}';
                 });
             }

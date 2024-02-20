@@ -1,12 +1,98 @@
-<title>Register</title>
-<form method="post" action="{% url 'main:register' %}">
-    {% csrf_token %}
+<!DOCTYPE html>
+<html>
 
-    {% if form.errors %}
-        <p>Greška.</p>
-    {% endif %}
+<head>
+    <title>Register</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            line-height: 1.5;
+            margin: 0;
+        }
 
-    {{ form }}
+        .main {
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            max-width: 500px;
+            width: 90%;
+            margin: 50px auto;
+            text-align: center;
+        }
 
-    <input type="submit" value="Register" />
-</form>
+        h1 {
+            color: #3399cc;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            width: 100%;
+            margin-top: 10px;
+            margin-bottom: 5px;
+            text-align: left;
+            color: #555;
+            font-weight: bold;
+        }
+
+        input {
+            display: block;
+            width: calc(100% - 20px);
+            margin-bottom: 15px;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            border: none;
+            color: white;
+            cursor: pointer;
+            background-color: #3399cc;
+            width: calc(100% - 20px);
+            font-size: 16px;
+        }
+
+        .wrap {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        @media (max-width: 600px) {
+            .main {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <h1>Register</h1>
+        {% if form.errors %}
+            <h3>Greška.</h3>
+        {% endif %}
+        <form method="post" action="{% url 'main:register' %}">
+            {% csrf_token %}
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" placeholder="Enter your Username" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="Enter your Password" required>
+
+            <button type="submit">Register</button>
+        </form>
+        <p>Already registered? 
+            <a href="{% url 'login' %}" style="text-decoration: none;">Login</a>
+        </p>
+    </div>
+</body>
+
+</html>
