@@ -141,3 +141,5 @@ DEFAULT_BREAKPOINTS = {
     'tablet': 767,
     'desktop': None,
 }
+
+LOGOUT_REDIRECT_URL = 'main:homepage'

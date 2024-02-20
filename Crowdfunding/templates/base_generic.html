@@ -18,16 +18,40 @@
         <a href="{% url 'main:project_list' %}">Projects</a>
         <a href="{% url 'main:donation_list' %}">Donations</a>
         <a href="{% url 'main:support_list' %}">Supports</a>
-    </div>
-    {% endblock %}
+        {% if user.is_authenticated %}
+        <a href="#" id="logout-link">Logout</a>
+        {% else %}
+        <a href="{% url 'login' %}">Login</a>
+        <a href="{% url 'main:register' %}">Register</a>
+        {% endif %}
+        </div>
+        {% endblock %}
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var logoutLink = document.getElementById('logout-link');
+        
+            if (logoutLink) {
+                logoutLink.addEventListener('click', function(event) {
+                    event.preventDefault();
+        
+                    // Postavi novu lokaciju na Django logout URL
+                    window.location.href = '{% url "logout" %}';
+                });
+            }
+        });
+        </script>
+        
 
     <div class="content">
         {% block content %}
         {% endblock %}
         {% if user.is_authenticated %}
-    <p>Vaše ime: {{ user.username }}</p>
+        <br>
+    <small><p>Vaše ime:<strong> {{ user.username }}</strong></p></small>
 {% else %}
-    <p>Niste prijavljeni.</p>
+    <br>
+    <small><p>Niste prijavljeni.</p></small>
 {% endif %}
     </div>
 </body>

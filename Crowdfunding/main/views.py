@@ -60,7 +60,7 @@ def register(request):
 
             user = authenticate(username=username, password=password)
             login(request, user)
-            return redirect('index')
+            return redirect('main:homepage')
 
     else:
         form = UserCreationForm()

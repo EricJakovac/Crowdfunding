@@ -4,9 +4,9 @@
 <h1>List of Supports</h1>
 {% for support in support_list %}
  
-<h3>{{support.korisnik.first_name}} {{support.korisnik.last_name}}</h3>
-<p>Projekt: {{support.projekt}}</p>
-<p>Datum podrške: {{support.datum_podrske}}</p>
+<h3>{{ support.korisnik.first_name }} {{ support.korisnik.last_name }}</h3>
+<p>Projekt: <a href="{% url 'main:project_list' %}">{{ support.projekt }}</a></p>
+<p>Datum podrške: {{ support.datum_podrske }}</p>
 </br>
 
 {% endfor %}

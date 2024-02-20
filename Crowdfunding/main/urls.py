@@ -11,4 +11,5 @@ urlpatterns = [
     path('project/', ProjectList.as_view(), name='project_list'),
     path('donation/', DonationList.as_view(), name='donation_list'),
     path('support/', SupportList.as_view(), name='support_list'),
+    path('register/', views.register, name='register'),
 ]

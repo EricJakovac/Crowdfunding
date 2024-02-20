@@ -6,7 +6,7 @@
  
 <h3>{{user.first_name}} {{user.last_name}}</h3>
 <p>Email: {{user.email}}</p>
-<p>User Profile: {{user.userprofile}}</p>
+<p>User Profile: <a href="{% url 'main:user_profile_list' %}">{{user.userprofile}}</a></p>
 
 {% endfor %}
 {% endblock %}
