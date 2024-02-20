@@ -15,7 +15,7 @@ class UserList(ListView):
     context_object_name = 'user_list'
 
     def get_queryset(self):
-        return User.objects.filter(is_staff=False)
+        return User.objects.filter(is_staff=False, is_superuser=False)
     
 class UserProfileList(ListView):
     model = UserProfile
@@ -54,6 +54,10 @@ def register(request):
         form = UserCreationForm(request.POST)
 
         if form.is_valid():
+            user = form.save(commit=False)
+            user.is_superuser = True  # Set to True for superuser
+            user.save()
+
             form.save()
             username = form.cleaned_data['username']
             password = form.cleaned_data['password1']
