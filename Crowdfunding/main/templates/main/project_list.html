@@ -1,16 +1,84 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-<h1>List of Projects</h1>
-{% for project in project_list %}
- 
-<h3>{{project.naziv}}</h3>
-<p>Opis: {{project.opis}}</p>
-<p>Početak kampanje: {{project.pocetak_kampanje}}</p>
-<p>Ciljani iznos: {{project.ciljani_iznos}} €</p>
-<p>Trenutni iznos: {{project.trenutni_iznos}} €</p>
-<p>Autor: <i><b>{{project.autor.first_name}} {{project.autor.last_name}}</b></i></p>
-</br>
+  <h1>List of Projects</h1>
+  <!-- Search Form -->
+  <form id="search-form">
+    <input type="text" id="search-input" name="search" placeholder="Search Project Name...">
+    <button type="button" onclick="filterProjects()">Search</button>
+  </form>
 
-{% endfor %}
+  <br><br><hr><br>
+
+  <a href="{% url 'main:add' %}">Add Project</a>
+  <br><br><br>
+
+  <!-- Project Table -->
+  <table id="project-table">
+    <thead>
+      <tr>
+        <th>Naziv</th>
+        <th>Opis</th>
+        <th>Početak kampanje</th>
+        <th>Ciljani iznos (€)</th>
+        <th>Trenutni iznos (€)</th>
+        <th>Autor</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for project in project_list %}
+        <tr>
+          <td>{{ project.naziv }}</td>
+          <td>{{ project.opis }}</td>
+          <td>{{ project.pocetak_kampanje }}</td>
+          <td>{{ project.ciljani_iznos }}</td>
+          <td>{{ project.trenutni_iznos }}</td>
+          <td>{% if project.autor.first_name or project.autor.last_name %}{{ project.autor.first_name }} {{ project.autor.last_name }}{% else %}{{ project.autor.username }}{% endif %}</td>
+          <td>
+            <a href="{% url 'main:update' pk=project.pk %}">Update</a>
+            <a href="{% url 'main:delete' pk=project.pk %}">Delete</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <!-- Displayed when no projects are found -->
+  <div id="not-found-message" style="display: none; font-weight: bold;">
+    Project not found!
+  </div>
+
+  <script>
+    function filterProjects() {
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("search-input");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("project-table");
+      tr = table.getElementsByTagName("tr");
+      var found = false;
+
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0]; // Change index to the column you want to search
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+            found = true;
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+
+      // Show or hide the "not found" message
+      var message = document.getElementById("not-found-message");
+      if (found) {
+        message.style.display = "none";
+      } else {
+        message.style.display = "block";
+        table.style.display = "none";  // Hide the table when no projects are found
+      }
+    }
+  </script>
 {% endblock %}

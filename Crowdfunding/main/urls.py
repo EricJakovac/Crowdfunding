@@ -12,4 +12,7 @@ urlpatterns = [
     path('donation/', DonationList.as_view(), name='donation_list'),
     path('support/', SupportList.as_view(), name='support_list'),
     path('register/', views.register, name='register'),
+    path('add/', views.ProjectCreateView.as_view(), name='add'),
+    path('update/<int:pk>/', views.ProjectUpdateView.as_view(), name='update'),
+    path('delete/<int:pk>/', views.ProjectDeleteView.as_view(), name='delete'),
 ]

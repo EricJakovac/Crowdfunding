@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete Project</title>
+</head>
+<body>
+    <h1>Delete Project</h1>
+    <p>Are you sure you want to delete "{{ project.naziv }}"?</p>
+    <form method="post">
+        {% csrf_token %}
+        <input type="submit" value="Confirm Delete">
+    </form>
+</body>
+</html>

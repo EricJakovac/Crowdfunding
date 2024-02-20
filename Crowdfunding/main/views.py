@@ -4,10 +4,11 @@ from django.shortcuts import render
 from main.models import *
 from django.views.generic import ListView
 from django.shortcuts import get_object_or_404, render, redirect
-from django.views.generic.edit import CreateView
-from django.urls import reverse_lazy
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
+from main.forms import *
 
 class UserList(ListView):
     model = User
@@ -48,6 +49,28 @@ class SupportList(ListView):
 
     def get_queryset(self):
         return Support.objects.all()
+    
+class ProjectCreateView(CreateView):
+    model = Project
+    form_class = ProjectForm
+    template_name = 'main/add_project.html'
+    success_url = reverse_lazy('main:project_list')
+
+class ProjectUpdateView(UpdateView):
+    model = Project
+    form_class = ProjectForm
+    template_name = 'main/update_project.html'
+    success_url = reverse_lazy('main:project_list')
+
+class ProjectDeleteView(DeleteView):
+    model = Project
+    template_name = 'main/delete_project.html'
+    success_url = reverse_lazy('main:project_list')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['project'] = self.get_object()
+        return context
     
 def register(request):
     if request.method == 'POST':
